@@ -27,11 +27,12 @@ class MinHeap
   # Space Complexity: ?
   def remove()
     index = 0
-    return_value = @store[index]
-    if !@store.empty?
-      @store[index] = @store.pop 
-      heap_down(index)
-    end
+    last = @store.length - 1
+    
+    swap(index, last)
+    return_value = @store.pop
+    heap_down(index)
+
     return return_value.value
   end
 
@@ -83,18 +84,14 @@ class MinHeap
     child_index_left = ((index * 2) + 1)
     child_index_right = ((index * 2) + 2)
 
-    while index < @store.length
-      if @store[child_index_left]
-        if @store[child_index_left].key < @store[index].key
-          swap(index, child_index_left)
-          index += 1
-        end
-      elsif @store[child_index_right]
-        if @store[child_index_right].key < @store[index].key
-          swap(child_index_right, index)
-          index += 1
-        end
-      end
+    if @store[child_index_left] == nil
+      return
+    elsif @store[child_index_left].key < @store[index].key
+        swap(child_index_left, index)
+        heap_down(child_index_left)
+    else
+        swap(child_index_right, index)
+        heap_down(child_index_right)
     end
   end
 
