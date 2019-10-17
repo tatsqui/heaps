@@ -78,4 +78,13 @@ describe "Heap" do
   # Another assert
   expect(removed).must_equal "Pasta"
   end
+
+  it "can sort a list in ascending order using heap sort" do
+    list = [5, 3, 1, 7]
+    min_result = [1, 3, 5, 7]
+
+    sorted_result = heap_sort(list)
+    
+    expect(sorted_result).must_equal(min_result)
+  end
 end

@@ -1,3 +1,4 @@
+require 'pry'
 class HeapNode
   attr_reader :key, :value
 
@@ -14,8 +15,8 @@ class MinHeap
   end
 
   # This method adds a HeapNode instance to the heap
-  # Time Complexity: ?
-  # Space Complexity: ?
+  # Time Complexity: O(log n) bc it's a tree 
+  # Space Complexity: O(1)
   def add(key, value = key)
     @store << HeapNode.new(key, value)
     heap_up(@store.length-1)
@@ -23,9 +24,9 @@ class MinHeap
 
   # This method removes and returns an element from the heap
   #   maintaining the heap structure
-  # Time Complexity: ?
-  # Space Complexity: ?
-  def remove()
+  # Time Complexity: O(log n) bc it's a tree
+  # Space Complexity: O(n log n) bc of recursive calls
+  def remove
     index = 0
     return nil if @store.empty?
 
@@ -61,8 +62,8 @@ class MinHeap
   private
 
   # This helper method takes an index and
-  #  moves it up the heap, if it is less than it's parent node.
-  #  It could be **very** helpful for the add method.
+  # moves it up the heap, if it is less than it's parent node.
+  # It could be **very** helpful for the add method.
   # Time complexity: ?
   # Space complexity: ?
   def heap_up(index)
@@ -85,23 +86,18 @@ class MinHeap
     child_index_right = ((index * 2) + 2)
 
     #if there are no children, return
-    return if @store[child_index_left].nil?
-
-    # if the right node is nil, then we need to check the left node
-    # and swap if the left_value is less than the current if not, 
-    # then return
-    if @store[child_index_right].nil?
-      @store[child_index_left].value < @store[index].value ? swap(index, child_index_left) : return
-    end
-
-    #if there are two children, we check if left key is smaller than the right key
-    # swap and then heap down 
-    if @store[child_index_left].key < @store[child_index_right].key 
+    if @store[child_index_left].nil?
+      return 
+    elsif @store[child_index_right].nil?
       swap(index, child_index_left)
-      heap_down(child_index_left)
-    else
-      swap(index, child_index_right)
-      heap_down(child_index_right)
+    else 
+      if @store[child_index_left].key < @store[child_index_right].key  
+        swap(index, child_index_left)
+        heap_down(child_index_left)
+      else
+        swap(index, child_index_right)
+        heap_down(child_index_right)
+      end
     end
   end
 
