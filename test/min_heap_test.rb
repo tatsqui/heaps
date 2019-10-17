@@ -78,6 +78,27 @@ describe "Heap" do
   # Another assert
   expect(removed).must_equal "Pasta"
   end
+end
+
+describe "heap sort" do 
+  it "can handle a null list"  do 
+    result = heap_sort(nil)
+    assert_nil(result)
+  end
+
+  it "can handle an empty list" do 
+    list = []
+    result = heap_sort(list)
+
+    assert_empty(result)
+  end
+
+  it "can handle a list with one element" do 
+    list = [10]
+    result = heap_sort(list)
+
+    expect(result).must_equal list
+  end
 
   it "can sort a list in ascending order using heap sort" do
     list = [5, 3, 1, 7]
